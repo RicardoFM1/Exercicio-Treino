@@ -109,7 +109,7 @@ Não implementado
 
 ---------------------------------
 
-# Que ferramentas usei?
+# Quais ferramentas usei?
 
 - MySql Server
 - MySql Workbench
