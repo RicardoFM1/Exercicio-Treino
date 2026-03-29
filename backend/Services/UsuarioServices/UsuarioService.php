@@ -22,7 +22,7 @@ class UsuarioService {
         ];
     }
 
-    $usuarioFind = $this->usuarioDb->prepare("SELECT id, nome, email, role FROM usuarios WHERE email = :email");
+    $usuarioFind = $this->usuarioDb->prepare("SELECT id, nome, email, senha, role FROM usuarios WHERE email = :email");
     $usuarioFind->execute([':email' => $usuarioEmail]);
 
     $usuario = $usuarioFind->fetch();
@@ -82,19 +82,14 @@ class UsuarioService {
             session_start();
         }
 
-        $userFind = $this->usuarioDb->prepare("SELECT id, senha, role FROM usuarios WHERE email = :email");
-        $userFind->execute([":email" => $userData['email']]);
-        $usuario = $userFind->fetch();
+        $usuario = $this->buscarUsuarioPorEmail($userData['email']);
 
-        if(empty($usuario)){
-            http_response_code(404);
-            return [
-                'success' => false,
-                'message' => "Credenciais inválidas"
-            ];
+        if(isset($usuario['success']) && $usuario['success'] === false){
+            echo json_encode($usuario);
+            exit();
         }
-
-        $senhaValida = password_verify($userData['senha'], $usuario['senha']);
+        
+        $senhaValida = password_verify($userData['senha'], $usuario['dados']['senha']);
         
         if(!$senhaValida){
             http_response_code(401);
@@ -105,8 +100,8 @@ class UsuarioService {
         }
 
         session_regenerate_id(true);
-        $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['usuario_role'] = $usuario['role'];
+        $_SESSION['usuario_id'] = $usuario['dados']['id'];
+        $_SESSION['usuario_role'] = $usuario['dados']['role'];
         
         http_response_code(200);
         return [
