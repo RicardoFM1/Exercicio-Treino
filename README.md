@@ -267,20 +267,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db_produtos`.`produtos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_produtos`.`produtos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(45) NOT NULL,
-  `categoria_id` INT NOT NULL,
-  `status` VARCHAR(45) NOT NULL DEFAULT 'ativo',
-  'usuario_id' INT NOT NULL
+CREATE TABLE `produtos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(45) NOT NULL,
+  `categoria_id` int NOT NULL,
+  `status` varchar(45) DEFAULT 'ativo',
+  `usuario_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_categoria_id_idx` (`categoria_id` ASC) VISIBLE,
-  CONSTRAINT `fk_categoria_id`
-    FOREIGN KEY (`categoria_id`)
-    REFERENCES `db_categorias`.`categorias` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  KEY `fk_categoria_id_idx` (`categoria_id`),
+  KEY `fk_usuario_id_idx` (`usuario_id`),
+  CONSTRAINT `fk_categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `db_categorias`.`categorias` (`id`),
+  CONSTRAINT `fk_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `db_usuarios`.`usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 USE `db_categorias` ;
 
