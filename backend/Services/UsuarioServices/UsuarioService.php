@@ -1,5 +1,7 @@
 <?php
 
+use Firebase\JWT\JWT;
+
 require_once __DIR__ . "/../../Connections/ConnectionUsuario/dbUsuario.php";
 
 class UsuarioService {
@@ -78,9 +80,6 @@ class UsuarioService {
     }
 
     public function loginUsuario($userData){
-        if(session_status() === PHP_SESSION_NONE){
-            session_start();
-        }
 
         $usuario = $this->buscarUsuarioPorEmail($userData['email']);
 
@@ -98,32 +97,28 @@ class UsuarioService {
                 'message' => 'Credenciais inválidas'
             ];
         }
+        $payload = [
+            'exp' => time() + 3600,
+            'data' => [
+                'usuario_id' => $usuario['dados']['id'],
+                'email' => $usuario['dados']['email'],
+                'role' => $usuario['dados']['role']
+            ] 
+        ];
 
-        session_regenerate_id(true);
-        $_SESSION['usuario_id'] = $usuario['dados']['id'];
-        $_SESSION['usuario_role'] = $usuario['dados']['role'];
-        
+        $secretKey = $_ENV['JWT_SECRET_KEY'];
+
+        $jwt = JWT::encode($payload, $secretKey, 'HS256');
+
         http_response_code(200);
         return [
             'success' => true,
-            'message' => 'Usuario logado com sucesso'
+            'message' => 'Login realizado com sucesso',
+            'token' => $jwt
         ];
+
     }
 
-    public function logoutUsuario (){
-        if(session_status() === PHP_SESSION_NONE){
-            session_start();
-        }
-
-        $_SESSION['usuario_id'] = '';
-        $_SESSION['usuario_role'] = '';
-        session_destroy();
-
-        return [
-            'success' => true,
-            'message' => 'Usuario deslogado com sucesso'
-        ];
-        exit();
-    }
+    
 
 }

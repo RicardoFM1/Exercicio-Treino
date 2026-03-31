@@ -32,11 +32,5 @@ if($requestPath === "/usuarios/login"){
     }
 }
 
-if($requestPath === "/usuarios/logout"){
-    $usuarioController = new UsuarioController();
 
-    if($requestMethod === "POST"){
-        $usuarioController->logoutUsuario();
-        
-    }
-}
+

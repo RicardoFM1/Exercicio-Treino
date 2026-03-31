@@ -26,7 +26,4 @@ class UsuarioController {
     echo json_encode($this->usuarioService->loginUsuario($userDados));
     }
 
-    public function logoutUsuario (){
-    echo json_encode($this->usuarioService->logoutUsuario());
-    }
 }
