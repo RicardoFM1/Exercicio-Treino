@@ -139,6 +139,7 @@ Não implementado
 - Vs Code
 - Git Bash
 - Github
+- Composer
 
 # E linguagens? 
 
@@ -146,8 +147,8 @@ Não implementado
 
 # Como bibliotecas:
 
-- Apenas o phpdotenv (usado para conseguir usar variáveis de ambiente do .env pelo código inteiro)
-
+- phpdotenv (usado para conseguir usar variáveis de ambiente do .env pelo código inteiro)
+- php-jwt
 --------------- 
 
 # Como funciona o sistema de Login/Autenticação/Autorização do usuarios?
@@ -271,6 +272,7 @@ CREATE TABLE IF NOT EXISTS `db_produtos`.`produtos` (
   `titulo` VARCHAR(45) NOT NULL,
   `categoria_id` INT NOT NULL,
   `status` VARCHAR(45) NOT NULL DEFAULT 'ativo',
+  'usuario_id' INT NOT NULL
   PRIMARY KEY (`id`),
   INDEX `fk_categoria_id_idx` (`categoria_id` ASC) VISIBLE,
   CONSTRAINT `fk_categoria_id`
