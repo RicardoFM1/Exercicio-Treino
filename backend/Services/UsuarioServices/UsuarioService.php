@@ -33,7 +33,7 @@ class UsuarioService {
         http_response_code(404);
         return [
             'success' => false,
-            'message' => 'Usuário inexistente'
+            'message' => 'Credenciais inválidas'
         ];
       
     }else{

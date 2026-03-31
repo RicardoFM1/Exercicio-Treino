@@ -14,7 +14,7 @@ $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 $middleware = new MiddlewareUsuario();
-$validarAutenticacao = $middleware::verificarMiddlewareUsuario('Categoria');
+$validarAutenticacao = $middleware::verificarMiddlewareUsuario('Produto');
 
 if($requestPath === "/produtos"){
     $produtoController = new ProdutoController();

@@ -49,10 +49,6 @@ Não implementado
 	"senha": "12345678"
     }
 
-6. Logout de usuarios;
-* Método HTTP: Post
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/usuarios/logout
-* Corpo: Nulo
 
 # CRUD de CATEGORIAS:
 
@@ -64,11 +60,14 @@ Não implementado
 	"titulo": "teste"
     }
 * Valores padrões: Coluna "status" é sempre padrão "ativo", aqui não precisa enviar 
+* Auth: Authorization: bearer {token}
 
 2. Listagem de categorias;
 * Método HTTP: GET
 * Rota: http://localhost:{A porta definida a seguir na etapa 5}/categorias
 * Corpo: Nulo
+* Auth: Authorization: bearer {token}
+
 
 3. Atualização de categorias;
 * Método HTTP: PUT
@@ -78,11 +77,15 @@ Não implementado
 	"titulo": "teste",
     "status": "ativo" ou "inativo" -- Qualquer coisa diferente envia como "ativo"
 }
+* Auth: Authorization: bearer {token}
+
 
 4. Exclusão de categorias;
 * Método HTTP: DELETE
 * Rota: http://localhost:{A porta definida a seguir na etapa 5}/categorias?categoria_id={id da categoria}
 * Corpo: Nulo
+* Auth: Authorization: bearer {token}
+
 
 # CRUD de PRODUTOS:
 
@@ -95,11 +98,15 @@ Não implementado
 	"categoria_id": 1 -- Id da categoria precisa existir no banco de dados
 }
 * Valores padrões: Coluna "status" é sempre padrão "ativo", aqui não precisa enviar
+* Auth: Authorization: bearer {token}
+
 
 2. Listagem de produtos;
 * Método HTTP: GET
 * Rota: http://localhost:{A porta definida a seguir na etapa 5}/produtos
 * Corpo: Nulo
+* Auth: Authorization: bearer {token}
+
 
 3. Atualização de produtos;
 * Método HTTP: PUT
@@ -110,11 +117,15 @@ Não implementado
 	"categoria_id": 1 -- Id da categoria precisa existir no banco de dados
     "status": "ativo" ou "inativo" -- Qualquer coisa diferente envia como "ativo"
 }
+* Auth: Authorization: bearer {token}
+
 
 4. Exclusão de produtos;
 * Método HTTP: DELETE
 * Rota: http://localhost:{A porta definida a seguir na etapa 5}/produtos?produto_id={id do produto}
 * Corpo: Nulo
+* Auth: Authorization: bearer {token}
+
 
 
 
@@ -143,8 +154,7 @@ Não implementado
 
 * Sistema de login:
 Quando o usuário faz login, o sistema dispara uma requisição, nessa requisição é chamado a função na API loginUsuario em backend/Services/UsuarioServices/UsuarioService.php.
-- Na função é iniciado a sessão (Onde fica guardado o usuário com cookie):
-![alt text](/imagensReferencia/image-8.png)
+- Na função é chamado uma biblioteca (php-jwt) e o token é gerado e então retornado
 
 - depois é verificado se o usuário existe no banco de dados, buscando pelo email:
 ![alt text](/imagensReferencia/image-9.png)
@@ -156,7 +166,7 @@ Quando o usuário faz login, o sistema dispara uma requisição, nessa requisiç
 
 - Retorna esse se não tiver correta a senha
 
-- Por fim seta na sessão do PHP o id do usuário logado e o cargo dele (Admin ou Usuario)
+- Por fim faz o encode do JWT, junto com a chave secreta (JWT_SECRET_KEY, do .env) e coloca no token expiração, id do usuário logado e o cargo dele (Admin ou Usuario).
 ![alt text](/imagensReferencia/image-11.png)
 
 
@@ -304,6 +314,8 @@ DBCATEGORIA_HOST={NOME DO SEU HOST DO BANCO DE DADOS}
 DBCATEGORIA_USER={NOME DO USUARIO DO SEU BANCO DE DADOS}
 DBCATEGORIA_PASS={SENHA DO SEU BANCO DE DADOS}
 
+JWT_SECRET_KEY={qualquer string que você quiser e que seja bem secreta}
+
 5. # DEPOIS: 
 Inicie outro terminal (Pela seta, mesma do Git Bash), selecione "CMD" e execute lá dentro do terminal CMD:
 
@@ -384,6 +396,16 @@ Inicie o insomnia, crie uma conta/faça login ou inicie um projeto local, seleci
 7. Se caso necessário (métodos POST e PUT) adicione um corpo (body) para a requisição:
 ![alt text](/imagensReferencia/image-7.png) - Onde apresenta "JSON" é necessário selecionar o mesmo para funcionar e o corpo está listado os campos necessários no texto de "ROTAS" na Seção de funcionalidades
 
-8. Clique "SEND" para enviar a requisição e retornará algo.
+8. Nas rotas de produtos e categorias é necessário enviar o token JWT gerado no login:
+![alt text](/imagensReferencia/image14.png)
+
+9. Para colocar nas rotas de produtos e categorias faça o seguinte:
+![alt text](/imagensReferencia/image15.png)
+Entre na aba "AUTH" e daí na parte da setinha escolha Bearer Token e em seguida escreva no campo "Token", body e selecione a primeira opção, depois de selecionar clique denovo quando for colocado no campo e abrirá a seguinte tela:
+![alt text](/imagensReferencia/image16.png)
+Em "Request" coloque onde está a sua rota de login
+E em "Filter" coloque exatamente $..token, para pegar apenas o token.
+
+10. Clique "SEND" para enviar a requisição e retornará algo.
 
 No mais é esse o básico de como utilizar a API, se caso tiver alguma dúvida, contate para mais informações.

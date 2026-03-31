@@ -25,7 +25,7 @@ class MiddlewareUsuario
             echo json_encode(
                 [
                     'success' => false,
-                    'message' => 'Token não enviado no cabeçalho'
+                    'message' => 'Usuário não autenticado'
                 ]
             );
             exit;
@@ -56,6 +56,7 @@ class MiddlewareUsuario
                 ]);
                 exit;
             }
+           
 
             http_response_code(200);
             return $jwtDecoded->data;

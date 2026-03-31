@@ -1,5 +1,8 @@
 <?php
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 require_once __DIR__ . "/../../Connections/ConnectionProduto/dbProduto.php";
 require_once __DIR__ . "/../../Services/CategoriaServices/CategoriaService.php";
 
@@ -59,7 +62,7 @@ class ProdutoService
 
 
 
-    public function criarProduto($produtoDados)
+    public function criarProduto($produtoDados, $tokenJWT)
     {
         if (empty($produtoDados)) {
             http_response_code(400);
@@ -69,8 +72,8 @@ class ProdutoService
             ];
         }
 
-        $stmt = $this->produtoDb->prepare("INSERT INTO produtos (titulo, categoria_id)
-        VALUES (:titulo, :categoria_id)");
+        $stmt = $this->produtoDb->prepare("INSERT INTO produtos (titulo, categoria_id, usuario_id)
+        VALUES (:titulo, :categoria_id, :usuario_id)");
 
         $categoriaService = new CategoriaService();
         $categoria = $categoriaService->buscarCategoriaPorId($produtoDados['categoria_id']);
@@ -80,9 +83,17 @@ class ProdutoService
             exit();
         }
 
+        $secretKey = $_ENV['JWT_SECRET_KEY'];
+        $partesToken = explode(' ', $tokenJWT);
+        $parteStringJWT = $partesToken[1];
+
+        $tokenJwtDecoded = JWT::decode($parteStringJWT, new Key($secretKey, 'HS256'));
+
+
         $stmt->execute([
             ':titulo' => $produtoDados['titulo'],
-            ':categoria_id' => $produtoDados['categoria_id']
+            ':categoria_id' => $produtoDados['categoria_id'],
+            ':usuario_id' => $tokenJwtDecoded->data->usuario_id 
         ]);
 
         http_response_code(201);
@@ -94,7 +105,7 @@ class ProdutoService
 
 
 
-    public function atualizarProduto($produtoDados, $produtoId)
+    public function atualizarProduto($produtoDados, $produtoId, $tokenJWT)
     {
         if (empty($produtoDados) || empty($produtoId)) {
             http_response_code(400);
@@ -112,11 +123,28 @@ class ProdutoService
         }
 
         $produto = $this->buscarProdutoPorId($produtoId);
+        
 
         if (isset($produto['success']) && $produto['success'] === false) {
             http_response_code(404);
             echo json_encode($produto);
             exit();
+        }
+
+        $secretKey = $_ENV['JWT_SECRET_KEY'];
+        $partesToken = explode(' ', $tokenJWT);
+        $parteStringJWT = $partesToken[1];
+
+        $tokenJwtDecoded = JWT::decode($parteStringJWT, new Key($secretKey, 'HS256'));
+
+
+        if($tokenJwtDecoded->data->usuario_id !== $produto['dados']['usuario_id']){
+            http_response_code(401);
+            return [
+                'success' => false,
+                'message' => 'Sem permissão para editar este produto'
+            ];
+            exit;
         }
 
         $stmt = $this->produtoDb->prepare("UPDATE produtos set titulo = :titulo, categoria_id = :categoria_id,
@@ -144,7 +172,7 @@ class ProdutoService
         ];
     }
 
-    public function deletarProduto($produtoId)
+    public function deletarProduto($produtoId, $tokenJWT)
     {
         if (empty($produtoId)) {
             return [
@@ -159,6 +187,22 @@ class ProdutoService
             http_response_code(404);
             echo json_encode($produto);
             exit();
+        }
+
+         $secretKey = $_ENV['JWT_SECRET_KEY'];
+        $partesToken = explode(' ', $tokenJWT);
+        $parteStringJWT = $partesToken[1];
+
+        $tokenJwtDecoded = JWT::decode($parteStringJWT, new Key($secretKey, 'HS256'));
+
+
+        if($tokenJwtDecoded->data->usuario_id !== $produto['dados']['usuario_id']){
+            http_response_code(401);
+            return [
+                'success' => false,
+                'message' => 'Sem permissão para excluir este produto'
+            ];
+            exit;
         }
 
         $stmt = $this->produtoDb->prepare("DELETE FROM produtos WHERE id = :id");
