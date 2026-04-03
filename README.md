@@ -1,4 +1,4 @@
-# ---Exercicio-Treino---
+# --- Exercicio-Treino
 
 > Uma API de gerenciamento de produtos feito para um treino. O principal objetivo é treinar para a competição Senac e aprender a como fazer código bom, escalável e rápido.
 
