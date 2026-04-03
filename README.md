@@ -19,7 +19,7 @@ Uma API de gerenciamento de produtos feito para um treino. O principal objetivo 
 
 1. Cadastro de usuarios;
 * Método HTTP: POST
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/usuarios
+* Rota: http://localhost:{3000}/usuarios
 * Corpo: 
     {
 	"nome": "Ricardo",
@@ -30,7 +30,7 @@ Uma API de gerenciamento de produtos feito para um treino. O principal objetivo 
 
 2. Listagem de usuarios;
 * Método HTTP: GET
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/usuarios
+* Rota: http://localhost:{3000}/usuarios
 * Corpo: Nulo
 
 3. Atualização de usuarios;
@@ -41,7 +41,7 @@ Não implementado
 
 5. Login de usuarios;
 * Método HTTP: Post
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/usuarios/login
+* Rota: http://localhost:{3000}/usuarios/login
 * Corpo: 
     {
 	"nome": "Ricardo",
@@ -54,7 +54,7 @@ Não implementado
 
 1. Cadastro de categorias;
 * Método HTTP: POST
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/categorias
+* Rota: http://localhost:{3002}/categorias
 * Corpo: 
     {
 	"titulo": "teste"
@@ -64,14 +64,14 @@ Não implementado
 
 2. Listagem de categorias;
 * Método HTTP: GET
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/categorias
+* Rota: http://localhost:{3002}/categorias
 * Corpo: Nulo
 * Auth: Authorization: bearer {token}
 
 
 3. Atualização de categorias;
 * Método HTTP: PUT
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/categorias?categoria_id={id da categoria}
+* Rota: http://localhost:{3002}/categorias?categoria_id={id da categoria}
 * Corpo: 
 {
 	"titulo": "teste",
@@ -82,7 +82,7 @@ Não implementado
 
 4. Exclusão de categorias;
 * Método HTTP: DELETE
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/categorias?categoria_id={id da categoria}
+* Rota: http://localhost:{3002}/categorias?categoria_id={id da categoria}
 * Corpo: Nulo
 * Auth: Authorization: bearer {token}
 
@@ -91,7 +91,7 @@ Não implementado
 
 1. Cadastro de produtos;
 * Método HTTP: POST
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/produtos
+* Rota: http://localhost:{3001}/produtos
 * Corpo: 
 {
 	"titulo": "teste",
@@ -103,14 +103,14 @@ Não implementado
 
 2. Listagem de produtos;
 * Método HTTP: GET
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/produtos
+* Rota: http://localhost:{3001}/produtos
 * Corpo: Nulo
 * Auth: Authorization: bearer {token}
 
 
 3. Atualização de produtos;
 * Método HTTP: PUT
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/produtos?produto_id={id do produto}
+* Rota: http://localhost:{3001}/produtos?produto_id={id do produto}
 * Corpo: 
 {
 	"titulo": "teste",
@@ -122,7 +122,7 @@ Não implementado
 
 4. Exclusão de produtos;
 * Método HTTP: DELETE
-* Rota: http://localhost:{A porta definida a seguir na etapa 5}/produtos?produto_id={id do produto}
+* Rota: http://localhost:{3001}/produtos?produto_id={id do produto}
 * Corpo: Nulo
 * Auth: Authorization: bearer {token}
 
@@ -376,30 +376,30 @@ E se for Categorias:
 Inicie o insomnia, crie uma conta/faça login ou inicie um projeto local, selecionando a opção na tela do insomnia.
 
 
-1. No Insomnia crie um HTTP REQUEST:
+1. `No Insomnia crie um HTTP REQUEST:`
 ![alt text](/imagensReferencia/image-1.png)
 - Quando criar aparecerá da seguinte maneira: 
 ![alt text](/imagensReferencia/image-2.png)
 
-2. Clique em headers:
+2. `Clique em headers:`
 ![alt text](/imagensReferencia/image-5.png)
 
-4. Adicione, clicando em Add, em headers, a chave:
+4. `Adicione, clicando em Add, em headers, a chave:`
 ![alt text](/imagensReferencia/image-6.png)
 
-5. Mude conforme necessário o método HTTP (GET, POST, UPDATE ou DELETE, se necessário consulte o texto de "ROTAS" na Seção de funcionalidades acima para entender melhor):
+5. `Mude conforme necessário o método HTTP (GET, POST, UPDATE ou DELETE, se necessário consulte o texto de "ROTAS" na Seção de funcionalidades acima para entender melhor):`
 ![alt text](/imagensReferencia/image-3.png)
 
-6. Coloque a rota como citado acima as disponíves na seção ROTAS:
+6. `Coloque a rota como citado acima as disponíves na seção ROTAS:`
 ![alt text](/imagensReferencia/image-4.png)
 
-7. Se caso necessário (métodos POST e PUT) adicione um corpo (body) para a requisição:
-![alt text](/imagensReferencia/image-7.png) - Onde apresenta "JSON" é necessário selecionar o mesmo para funcionar e o corpo está listado os campos necessários no texto de "ROTAS" na Seção de funcionalidades
+7. `Se caso necessário (métodos POST e PUT) adicione um corpo (body) para a requisição:`
+![alt text](/imagensReferencia/image-7.png) - `Onde apresenta "JSON" é necessário selecionar o mesmo para funcionar e o corpo está listado os campos necessários no texto de "ROTAS" na Seção de funcionalidades`
 
-8. Nas rotas de produtos e categorias é necessário enviar o token JWT gerado no login:
+8. `Nas rotas de produtos e categorias é necessário enviar o token JWT gerado no login:`
 ![alt text](/imagensReferencia/image14.png)
 
-9. Para colocar nas rotas de produtos e categorias faça o seguinte:
+9. `Para colocar nas rotas de produtos e categorias faça o seguinte:`
 ![alt text](/imagensReferencia/image15.png)
 Entre na aba "AUTH" e daí na parte da setinha escolha Bearer Token e em seguida escreva no campo "Token", body e selecione a primeira opção, depois de selecionar clique denovo quando for colocado no campo e abrirá a seguinte tela:
 ![alt text](/imagensReferencia/image16.png)
