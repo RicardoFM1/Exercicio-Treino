@@ -1,6 +1,6 @@
-# Exercicio-Treino
+# ---Exercicio-Treino---
 
-Uma API de gerenciamento de produtos feito para um treino. O principal objetivo é treinar para a competição Senac e aprender a como fazer código bom, escalável e rápido.
+> Uma API de gerenciamento de produtos feito para um treino. O principal objetivo é treinar para a competição Senac e aprender a como fazer código bom, escalável e rápido.
 
 # A arquitetura de pastas se baseia em uma arquitetura de microserviços, separando bancos de dados e portas de rotas para cada "tabela". 
 
