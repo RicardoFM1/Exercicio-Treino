@@ -158,16 +158,19 @@ Quando o usuário faz login, o sistema dispara uma requisição, nessa requisiç
 - Na função é chamado uma biblioteca (php-jwt) e o token é gerado e então retornado
 
 - depois é verificado se o usuário existe no banco de dados, buscando pelo email:
+  
 ![alt text](/imagensReferencia/image-9.png)
 
 - Em seguida tratado erros
 
 - Verifica a senha com password_hash, que foi criado o hash no cadastro de usuário
+  
 ![alt text](/imagensReferencia/image-10.png)
 
 - Retorna esse se não tiver correta a senha
 
 - Por fim faz o encode do JWT, junto com a chave secreta (JWT_SECRET_KEY, do .env) e coloca no token expiração, id do usuário logado e o cargo dele (Admin ou Usuario).
+  
 ![alt text](/imagensReferencia/image-11.png)
 
 
@@ -177,6 +180,7 @@ Na parte das rotas, mais especificamente nas rotas de Produtos e Categorias, há
 Na parte de produtos, qualquer um Autenticado consegue usufruir.
 - A lógica é:
 Verificar se o valor de "usuario_id" existe na sessão, se não existir apresenta erro de não autenticado e retorna código HTTP 401 (Não autenticado):
+
 ![alt text](/imagensReferencia/image-12.png)
 
 - E então para por aí e não deixa seguir se não estiver autenticado.
@@ -186,6 +190,7 @@ A lógica de autenticação é a mesma
 - A de autorização é o seguinte
 
 Como foi colocado na sessão também o valor "usuario_role", cargo do usuário, validamos na rota de categoria se o usuário autenticado tem como cargo usuário ou admin, se for usuário normal para ali e não continua, retorna uma mensagem de erro com o código de resposta 403, mas caso for um admin, continua.
+
 
 ![alt text](/imagensReferencia/image-13.png)
 
@@ -205,6 +210,7 @@ Como foi colocado na sessão também o valor "usuario_role", cargo do usuário, 
 
 2. Configure o MySql Workbench do seguinte modo:
    - No canto superior esquerdo um icone de folha escrito SQL deve aparecer, você deve clicar:
+     
    ![alt text](/imagensReferencia/image.png) 
    - Ao clicar, aparecerá um campo para digitar, então copie o seguinte:
 
@@ -377,35 +383,48 @@ Inicie o insomnia, crie uma conta/faça login ou inicie um projeto local, seleci
 
 
 1. `No Insomnia crie um HTTP REQUEST:`
+   
 ![alt text](/imagensReferencia/image-1.png)
-- Quando criar aparecerá da seguinte maneira: 
+
+- Quando criar aparecerá da seguinte maneira:
+  
 ![alt text](/imagensReferencia/image-2.png)
 
 2. `Clique em headers:`
+   
 ![alt text](/imagensReferencia/image-5.png)
 
 4. `Adicione, clicando em Add, em headers, a chave:`
+   
 ![alt text](/imagensReferencia/image-6.png)
 
-5. `Mude conforme necessário o método HTTP (GET, POST, UPDATE ou DELETE, se necessário consulte o texto de "ROTAS" na Seção de funcionalidades acima para entender melhor):`
+6. `Mude conforme necessário o método HTTP (GET, POST, UPDATE ou DELETE, se necessário consulte o texto de "ROTAS" na Seção de funcionalidades acima para entender melhor):`
+   
 ![alt text](/imagensReferencia/image-3.png)
 
-6. `Coloque a rota como citado acima as disponíves na seção ROTAS:`
+8. `Coloque a rota como citado acima as disponíves na seção ROTAS:`
+   
 ![alt text](/imagensReferencia/image-4.png)
 
-7. `Se caso necessário (métodos POST e PUT) adicione um corpo (body) para a requisição:`
-![alt text](/imagensReferencia/image-7.png) - `Onde apresenta "JSON" é necessário selecionar o mesmo para funcionar e o corpo está listado os campos necessários no texto de "ROTAS" na Seção de funcionalidades`
+10. `Se caso necessário (métodos POST e PUT) adicione um corpo (body) para a requisição:`
+    
+![alt text](/imagensReferencia/image-7.png) 
+- `Onde apresenta "JSON" é necessário selecionar o mesmo para funcionar e o corpo está listado os campos necessários no texto de "ROTAS" na Seção de funcionalidades`
 
-8. `Nas rotas de produtos e categorias é necessário enviar o token JWT gerado no login:`
+12. `Nas rotas de produtos e categorias é necessário enviar o token JWT gerado no login:`
+    
 ![alt text](/imagensReferencia/image14.png)
 
-9. `Para colocar nas rotas de produtos e categorias faça o seguinte:`
+14. `Para colocar nas rotas de produtos e categorias faça o seguinte:`
+    
 ![alt text](/imagensReferencia/image15.png)
+
 Entre na aba "AUTH" e daí na parte da setinha escolha Bearer Token e em seguida escreva no campo "Token", body e selecione a primeira opção, depois de selecionar clique denovo quando for colocado no campo e abrirá a seguinte tela:
+
 ![alt text](/imagensReferencia/image16.png)
+
 Em "Request" coloque onde está a sua rota de login
 E em "Filter" coloque exatamente $..token, para pegar apenas o token.
 
-10. Clique "SEND" para enviar a requisição e retornará algo.
+16. Clique "SEND" para enviar a requisição e retornará algo.
 
-No mais é esse o básico de como utilizar a API, se caso tiver alguma dúvida, contate para mais informações.
