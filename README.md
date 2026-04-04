@@ -1,430 +1,366 @@
-# --- Exercicio-Treino
+# 🏋️ Exercicio-Treino API
 
-> Uma API de gerenciamento de produtos feito para um treino. O principal objetivo é treinar para a competição Senac e aprender a como fazer código bom, escalável e rápido.
+> API REST de gerenciamento de produtos desenvolvida em PHP puro, com autenticação JWT e arquitetura de microserviços. Projeto criado para treinamento da competição Senac.
 
-# A arquitetura de pastas se baseia em uma arquitetura de microserviços, separando bancos de dados e portas de rotas para cada "tabela". 
+![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql&logoColor=white)
+![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
-# Banco de dados:
+---
 
-- São apenas 3 tabelas: usuarios, produtos e categorias
-- Produtos tem uma foreign key associada à tabela categorias
+## 📋 Índice
 
-* EER do Banco:
-<img width="654" height="274" alt="EER banco" src="https://github.com/user-attachments/assets/855e454c-1e55-4522-ae17-ba175f0cdd78" />
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Tecnologias](#-tecnologias)
+- [Banco de Dados](#-banco-de-dados)
+- [Rotas da API](#-rotas-da-api)
+- [Autenticação](#-autenticação)
+- [Como Rodar](#-como-rodar)
+- [Variáveis de Ambiente](#-variáveis-de-ambiente)
 
+---
 
-# As principais funções se constituem de:
+## 📌 Sobre o Projeto
 
-# Gerenciamento de USUARIOS:
+A arquitetura é baseada em **microserviços**, separando bancos de dados e portas de rotas para cada entidade:
 
-1. Cadastro de usuarios;
-* Método HTTP: POST
-* Rota: http://localhost:{3000}/usuarios
-* Corpo: 
-    {
-	"nome": "Ricardo",
-	"email": "Ricardo2@gmail.com", -- Se já existir, não cria
-	"senha": "12345678"
-    }
-* Valores padrões: A coluna "role" é sempre padrão "usuario", aqui não precisa informar
+| Serviço    | Porta   | Banco de dados    |
+|------------|---------|-------------------|
+| Usuários   | `3000`  | `db_usuarios`     |
+| Produtos   | `3001`  | `db_produtos`     |
+| Categorias | `3002`  | `db_categorias`   |
 
-2. Listagem de usuarios;
-* Método HTTP: GET
-* Rota: http://localhost:{3000}/usuarios
-* Corpo: Nulo
+---
 
-3. Atualização de usuarios;
-Não implementado
+## 🛠 Tecnologias
 
-4. Exclusão de usuarios;
-Não implementado
-
-5. Login de usuarios;
-* Método HTTP: Post
-* Rota: http://localhost:{3000}/usuarios/login
-* Corpo: 
-    {
-	"nome": "Ricardo",
-	"email": "Ricardo2@gmail.com", -- Precisa existir no banco e a senha ser certa
-	"senha": "12345678"
-    }
-
-
-# CRUD de CATEGORIAS:
-
-1. Cadastro de categorias;
-* Método HTTP: POST
-* Rota: http://localhost:{3002}/categorias
-* Corpo: 
-    {
-	"titulo": "teste"
-    }
-* Valores padrões: Coluna "status" é sempre padrão "ativo", aqui não precisa enviar 
-* Auth: Authorization: bearer {token}
-
-2. Listagem de categorias;
-* Método HTTP: GET
-* Rota: http://localhost:{3002}/categorias
-* Corpo: Nulo
-* Auth: Authorization: bearer {token}
-
-
-3. Atualização de categorias;
-* Método HTTP: PUT
-* Rota: http://localhost:{3002}/categorias?categoria_id={id da categoria}
-* Corpo: 
-{
-	"titulo": "teste",
-    "status": "ativo" ou "inativo" -- Qualquer coisa diferente envia como "ativo"
-}
-* Auth: Authorization: bearer {token}
-
-
-4. Exclusão de categorias;
-* Método HTTP: DELETE
-* Rota: http://localhost:{3002}/categorias?categoria_id={id da categoria}
-* Corpo: Nulo
-* Auth: Authorization: bearer {token}
-
-
-# CRUD de PRODUTOS:
-
-1. Cadastro de produtos;
-* Método HTTP: POST
-* Rota: http://localhost:{3001}/produtos
-* Corpo: 
-{
-	"titulo": "teste",
-	"categoria_id": 1 -- Id da categoria precisa existir no banco de dados
-}
-* Valores padrões: Coluna "status" é sempre padrão "ativo", aqui não precisa enviar
-* Auth: Authorization: bearer {token}
-
-
-2. Listagem de produtos;
-* Método HTTP: GET
-* Rota: http://localhost:{3001}/produtos
-* Corpo: Nulo
-* Auth: Authorization: bearer {token}
-
-
-3. Atualização de produtos;
-* Método HTTP: PUT
-* Rota: http://localhost:{3001}/produtos?produto_id={id do produto}
-* Corpo: 
-{
-	"titulo": "teste",
-	"categoria_id": 1 -- Id da categoria precisa existir no banco de dados
-    "status": "ativo" ou "inativo" -- Qualquer coisa diferente envia como "ativo"
-}
-* Auth: Authorization: bearer {token}
-
-
-4. Exclusão de produtos;
-* Método HTTP: DELETE
-* Rota: http://localhost:{3001}/produtos?produto_id={id do produto}
-* Corpo: Nulo
-* Auth: Authorization: bearer {token}
-
-
-
-
----------------------------------
-
-# Quais ferramentas usei?
-
-- MySql Server
-- MySql Workbench
-- Insomnia
-- Vs Code
-- Git Bash
-- Github
+**Ferramentas:**
+- PHP 8.x (puro, sem framework)
+- MySQL Server + MySQL Workbench
+- Insomnia (testes de rota)
 - Composer
 
-# E linguagens? 
+**Bibliotecas:**
+- [`vlucas/phpdotenv`](https://github.com/vlucas/phpdotenv) — variáveis de ambiente
+- [`firebase/php-jwt`](https://github.com/firebase/php-jwt) — autenticação JWT
 
-- Apenas PHP puro
+---
 
-# Como bibliotecas:
+## 🗄 Banco de Dados
 
-- phpdotenv (usado para conseguir usar variáveis de ambiente do .env pelo código inteiro)
-- php-jwt
---------------- 
+O projeto usa 3 schemas/bancos separados com 3 tabelas:
 
-# Como funciona o sistema de Login/Autenticação/Autorização do usuarios?
+- `usuarios` (db_usuarios)
+- `categorias` (db_categorias)
+- `produtos` (db_produtos) — possui FK para `categorias`
 
-* Sistema de login:
-Quando o usuário faz login, o sistema dispara uma requisição, nessa requisição é chamado a função na API loginUsuario em backend/Services/UsuarioServices/UsuarioService.php.
-- Na função é chamado uma biblioteca (php-jwt) e o token é gerado e então retornado
+**EER do Banco:**
 
-- depois é verificado se o usuário existe no banco de dados, buscando pelo email:
-  
-![alt text](/imagensReferencia/image-9.png)
+![EER banco](imagensReferencia/eer.png)
 
-- Em seguida tratado erros
+### Script de criação
 
-- Verifica a senha com password_hash, que foi criado o hash no cadastro de usuário
-  
-![alt text](/imagensReferencia/image-10.png)
+<details>
+<summary>Clique para expandir o SQL completo</summary>
 
-- Retorna esse se não tiver correta a senha
-
-- Por fim faz o encode do JWT, junto com a chave secreta (JWT_SECRET_KEY, do .env) e coloca no token expiração, id do usuário logado e o cargo dele (Admin ou Usuario).
-  
-![alt text](/imagensReferencia/image-11.png)
-
-
-* Sistema de autenticação: 
-Na parte das rotas, mais especificamente nas rotas de Produtos e Categorias, há uma proteção que verifica se o usuário está logado, por meio da sessão e se ele é admin ou usuario normal.
-
-Na parte de produtos, qualquer um Autenticado consegue usufruir.
-- A lógica é:
-Verificar se o valor de "usuario_id" existe na sessão, se não existir apresenta erro de não autenticado e retorna código HTTP 401 (Não autenticado):
-
-![alt text](/imagensReferencia/image-12.png)
-
-- E então para por aí e não deixa seguir se não estiver autenticado.
-
-Na parte de categorias, apenas admins conseguem usufruir, porém ainda verifica se está logado ou não:
-A lógica de autenticação é a mesma
-- A de autorização é o seguinte
-
-Como foi colocado na sessão também o valor "usuario_role", cargo do usuário, validamos na rota de categoria se o usuário autenticado tem como cargo usuário ou admin, se for usuário normal para ali e não continua, retorna uma mensagem de erro com o código de resposta 403, mas caso for um admin, continua.
-
-
-![alt text](/imagensReferencia/image-13.png)
-
----------------
-
-# Como Rodar a API?
-
-# INSTALAÇÃO E CONFIGURAÇÃO:
-
-1. Instale os seguintes aplicativos/ferramentas:
-    - MySql Server (Configure colocando senha e guardado ela)
-    - MySql Workbench (Inicie o banco de dados local com a senha do MySql Server)
-    - Instale o PHP (Versão mais atualizada)
-    - Instale o INSOMNIA (Para testar rotas da API)
-    - Instale o VS Code (Versão mais atual, para executar código internos)
-    - Instale o Git Bash (Para conseguir clonar esse repositório)
-
-2. Configure o MySql Workbench do seguinte modo:
-   - No canto superior esquerdo um icone de folha escrito SQL deve aparecer, você deve clicar:
-     
-   ![alt text](/imagensReferencia/image.png) 
-   - Ao clicar, aparecerá um campo para digitar, então copie o seguinte:
-
+```sql
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema db_usuarios
--- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `db_usuarios` DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA IF NOT EXISTS `db_produtos`;
+CREATE SCHEMA IF NOT EXISTS `db_categorias`;
 
--- -----------------------------------------------------
--- Schema db_usuarios
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_usuarios` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
--- Schema db_produtos
--- -----------------------------------------------------
+USE `db_usuarios`;
 
--- -----------------------------------------------------
--- Schema db_produtos
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_produtos` ;
--- -----------------------------------------------------
--- Schema db_categorias
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema db_categorias
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_categorias` ;
-USE `db_usuarios` ;
-
--- -----------------------------------------------------
--- Table `db_usuarios`.`usuarios`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_usuarios`.`usuarios` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `id`    INT NOT NULL AUTO_INCREMENT,
+  `nome`  VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
-  `role` VARCHAR(45) NULL DEFAULT 'usuario',
+  `role`  VARCHAR(45) NULL DEFAULT 'usuario',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-ENGINE = InnoDB;
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+) ENGINE = InnoDB;
 
-USE `db_produtos` ;
+USE `db_categorias`;
 
--- -----------------------------------------------------
--- Table `db_categorias`.`categorias`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_categorias`.`categorias` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id`     INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(45) NOT NULL,
   `status` VARCHAR(45) NULL DEFAULT 'ativo',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
 
+USE `db_produtos`;
 
--- -----------------------------------------------------
--- Table `db_produtos`.`produtos`
--- -----------------------------------------------------
-CREATE TABLE `produtos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(45) NOT NULL,
-  `categoria_id` int NOT NULL,
-  `status` varchar(45) DEFAULT 'ativo',
-  `usuario_id` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `produtos` (
+  `id`           INT NOT NULL AUTO_INCREMENT,
+  `titulo`       VARCHAR(45) NOT NULL,
+  `categoria_id` INT NOT NULL,
+  `status`       VARCHAR(45) DEFAULT 'ativo',
+  `usuario_id`   INT NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_categoria_id_idx` (`categoria_id`),
-  KEY `fk_usuario_id_idx` (`usuario_id`),
   CONSTRAINT `fk_categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `db_categorias`.`categorias` (`id`),
-  CONSTRAINT `fk_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `db_usuarios`.`usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-
-USE `db_categorias` ;
+  CONSTRAINT `fk_usuario_id`   FOREIGN KEY (`usuario_id`)   REFERENCES `db_usuarios`.`usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+```
 
-    - Depois disso você terá o banco de dados criado, com tabelas, colunas e etc.
+</details>
 
-# NOTA: PASSO IMPORTANTE PARA OUTRAS ETAPAS
+---
 
-3. Dentro do Vs Code, Aperte a tecla CTRL + J, procure um + ao lado de uma seta, clique na seta e selecione
-Git bash, dentro do Git bash execute os seguintes comandos:
+## 🔀 Rotas da API
 
-4. # PRIMEIRAMENTE:
-No terminal do Git Bash execute o seguinte: 
-- git clone https://github.com/RicardoFM1/Exercicio-Treino.git
+### 👤 Usuários — `localhost:3000`
 
-Clique com o botão direito no navegador na parte esquerda do VS Code (onde tem as pastas) e crie um novo arquivo chamado ".env" dentro dele aplique o seguinte:
+| Método | Rota               | Descrição           | Auth |
+|--------|--------------------|---------------------|------|
+| POST   | `/usuarios`        | Cadastrar usuário   | ❌   |
+| GET    | `/usuarios`        | Listar usuários     | ❌   |
+| POST   | `/usuarios/login`  | Login (retorna JWT) | ❌   |
 
+<details>
+<summary>📄 Exemplos de corpo (body)</summary>
+
+**POST /usuarios** — Cadastrar
+```json
+{
+  "nome": "Ricardo",
+  "email": "Ricardo@gmail.com",
+  "senha": "12345678"
+}
+```
+> O campo `role` é preenchido automaticamente como `"usuario"`.
+
+**POST /usuarios/login** — Login
+```json
+{
+  "nome": "Ricardo",
+  "email": "Ricardo@gmail.com",
+  "senha": "12345678"
+}
+```
+> Retorna um token JWT. Use-o nas rotas protegidas.
+
+</details>
+
+---
+
+### 📦 Produtos — `localhost:3001`
+
+> Requer autenticação: qualquer usuário logado.
+
+| Método | Rota                              | Descrição          | Auth |
+|--------|-----------------------------------|--------------------|------|
+| POST   | `/produtos`                       | Cadastrar produto  | ✅   |
+| GET    | `/produtos`                       | Listar produtos    | ✅   |
+| PUT    | `/produtos?produto_id={id}`       | Atualizar produto  | ✅   |
+| DELETE | `/produtos?produto_id={id}`       | Deletar produto    | ✅   |
+
+<details>
+<summary>📄 Exemplos de corpo (body)</summary>
+
+**POST /produtos** — Cadastrar
+```json
+{
+  "titulo": "Notebook",
+  "categoria_id": 1
+}
+```
+
+**PUT /produtos?produto_id=1** — Atualizar
+```json
+{
+  "titulo": "Notebook Gamer",
+  "categoria_id": 2,
+  "status": "ativo"
+}
+```
+> `status` aceita `"ativo"` ou `"inativo"`. Qualquer outro valor será tratado como `"ativo"`.
+
+</details>
+
+---
+
+### 🗂 Categorias — `localhost:3002`
+
+> Requer autenticação: **somente admins**.
+
+| Método | Rota                                  | Descrição            | Auth  |
+|--------|---------------------------------------|----------------------|-------|
+| POST   | `/categorias`                         | Cadastrar categoria  | ✅ Admin |
+| GET    | `/categorias`                         | Listar categorias    | ✅ Admin |
+| PUT    | `/categorias?categoria_id={id}`       | Atualizar categoria  | ✅ Admin |
+| DELETE | `/categorias?categoria_id={id}`       | Deletar categoria    | ✅ Admin |
+
+<details>
+<summary>📄 Exemplos de corpo (body)</summary>
+
+**POST /categorias** — Cadastrar
+```json
+{
+  "titulo": "Eletrônicos"
+}
+```
+
+**PUT /categorias?categoria_id=1** — Atualizar
+```json
+{
+  "titulo": "Informática",
+  "status": "ativo"
+}
+```
+
+</details>
+
+---
+
+## 🔐 Autenticação
+
+O sistema usa **JWT (JSON Web Token)**:
+
+1. O usuário faz login via `POST /usuarios/login`
+2. A API retorna um token JWT contendo: `id`, `role` e `exp` (expiração)
+3. O token deve ser enviado no header de todas as rotas protegidas:
+
+```
+Authorization: Bearer {seu_token_aqui}
+```
+
+**Níveis de acesso:**
+
+| Role      | Produtos | Categorias |
+|-----------|----------|------------|
+| `usuario` | ✅       | ❌         |
+| `admin`   | ✅       | ✅         |
+
+---
+
+## 🚀 Como Rodar
+
+### Pré-requisitos
+
+- PHP 8.x
+- MySQL Server + MySQL Workbench
+- Composer
+- Git
+
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/RicardoFM1/Exercicio-Treino.git
+cd Exercicio-Treino
+```
+
+### 2. Instalar dependências
+
+```bash
+cd backend
+composer require vlucas/phpdotenv
+composer require firebase/php-jwt
+```
+
+### 3. Configurar variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto (veja a seção [Variáveis de Ambiente](#-variáveis-de-ambiente)).
+
+### 4. Criar o banco de dados
+
+Abra o MySQL Workbench, conecte ao seu servidor local e execute o [script SQL](#script-de-criação) acima.
+
+### 5. Popular o banco (opcional)
+
+```bash
+# Usuários
+cd backend/Seeders/Usuarios
+php usuariosSeeder.php
+
+# Categorias
+cd ../Categorias
+php categoriasSeeder.php
+
+# Produtos
+cd ../Produtos
+php produtosSeeder.php
+```
+
+### 6. Iniciar os servidores
+
+Abra **3 terminais** e execute um comando em cada:
+
+```bash
+# Terminal 1 — Usuários
+cd backend/Routes/RouteUsuario
+php -S localhost:3000
+```
+
+```bash
+# Terminal 2 — Produtos
+cd backend/Routes/RouteProduto
+php -S localhost:3001
+```
+
+```bash
+# Terminal 3 — Categorias
+cd backend/Routes/RouteCategoria
+php -S localhost:3002
+```
+
+### 7. Testar no Insomnia
+
+1. Crie um novo HTTP Request
+2. Selecione o método (GET, POST, PUT, DELETE)
+3. Informe a URL da rota
+4. Para rotas protegidas, vá em **Auth → Bearer Token** e cole o token retornado pelo login
+5. Para POST/PUT, vá em **Body → JSON** e cole o corpo da requisição
+6. Clique em **Send**
+
+---
+
+## ⚙️ Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+
+```env
+# Banco de Usuários
 DBUSUARIO_NAME=db_usuarios
-DBUSUARIO_HOST={NOME DO SEU HOST DO BANCO DE DADOS}
-DBUSUARIO_USER={NOME DO USUARIO DO SEU BANCO DE DADOS}
-DBUSUARIO_PASS={SENHA DO SEU BANCO DE DADOS}
+DBUSUARIO_HOST=localhost
+DBUSUARIO_USER=root
+DBUSUARIO_PASS=sua_senha
 
+# Banco de Produtos
 DBPRODUTO_NAME=db_produtos
-DBPRODUTO_HOST={NOME DO SEU HOST DO BANCO DE DADOS}
-DBPRODUTO_USER={NOME DO USUARIO DO SEU BANCO DE DADOS}
-DBPRODUTO_PASS={SENHA DO SEU BANCO DE DADOS}
+DBPRODUTO_HOST=localhost
+DBPRODUTO_USER=root
+DBPRODUTO_PASS=sua_senha
 
+# Banco de Categorias
 DBCATEGORIA_NAME=db_categorias
-DBCATEGORIA_HOST={NOME DO SEU HOST DO BANCO DE DADOS}
-DBCATEGORIA_USER={NOME DO USUARIO DO SEU BANCO DE DADOS}
-DBCATEGORIA_PASS={SENHA DO SEU BANCO DE DADOS}
+DBCATEGORIA_HOST=localhost
+DBCATEGORIA_USER=root
+DBCATEGORIA_PASS=sua_senha
 
-JWT_SECRET_KEY={qualquer string que você quiser e que seja bem secreta}
+# JWT
+JWT_SECRET_KEY=uma_chave_secreta_bem_longa_e_segura
+```
 
-5. # DEPOIS: 
-Inicie outro terminal (Pela seta, mesma do Git Bash), selecione "CMD" e execute lá dentro do terminal CMD:
+> ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
 
-    - cd backend ou cd Exercicio-Treino (Para entrar na pasta da API)
-    - php require vlucas/phpdotenv
-    - verifique se o php está instalado e com alguma versão digitando "php --version"
+---
 
-6. # EM SEGUIDA: 
-Inicie novamente outro terminal CMD, como acima, porém, inicie 3 terminais.
+## 🚧 Funcionalidades não implementadas
 
-NO TERMINAL 1:
-Execute: 
-- cd Exercicio-Treino/backend/Routes/RouteUsuario (dependendo no seu caso irá ter ou não o "Exercicio-Treino, depende de como está a estrutura")
-Na próxima linha:
-- php -S localhost:3000 (Ou a rota que você quiser, não pode ser uma já em uso em outros terminais, mas lembre-se dessa rota para usar no insomnia)
+- [ ] Atualização de usuário (PUT /usuarios)
+- [ ] Exclusão de usuário (DELETE /usuarios)
+- [ ] Paginação nas listagens
+- [ ] Testes automatizados
 
-Nisso, a API dos usuário estará rodando, você poderá testar no insomnia.
-
-
-No Terminal 2: 
-- cd Exercicio-Treino/backend/Routes/RouteProduto (dependendo no seu caso irá ter ou não o "Exercicio-Treino, depende de como está a estrutura")
-Na próxima linha:
-- php -S localhost:3001 (Ou a rota que você quiser, não pode ser uma já em uso em outros terminais, mas lembre-se dessa rota para usar no insomnia)
-
-Nisso, a API dos produtos estará rodando, você poderá testar no insomnia.
-
-
-No Terminal 3: 
-- cd Exercicio-Treino/backend/Routes/RouteCategoria (dependendo no seu caso irá ter ou não o "Exercicio-Treino, depende de como está a estrutura")
-Na próxima linha:
-- php -S localhost:3002 (Ou a rota que você quiser, não pode ser uma já em uso em outros terminais, mas lembre-se dessa rota para usar no insomnia)
-
-Nisso, a API das categorias estará rodando, você poderá testar no insomnia.
-
-
-Agora abra outro terminal CMD e execute:
-
-# DETALHE MUITO IMPORTANTE ANTES DESSE PASSO:
-SE CASO AINDA NÃO INSTALOU O MYSQL SERVER E MUITO MENOS O WORKBENCH, É NECESSÁRIO INSTALAR ANTES DE PROSSEGUIR, EXECUTE O PASSO 2 NA SEÇÃO "INSTALAÇÃO E CONFIGURAÇÃO".
-
-- cd Exercicio-Treino/backend/Seeders/Categorias (dependendo no seu caso irá ter ou não o "Exercicio-Treino, depende de como está a estrutura")
-
-Sobre este passo, você pode optar por criar mais 3 terminais e colocar cada "cd" em um, a única coisa que mudará será o final, caso queira inserir dados na tabela Categorias do banco de dados, o final da rota vai ser "Categorias", se quiser nos Usuarios irá ser "Usuarios" e se caso quiser Produtos será "Produtos".
-
-* Seguindo qualquer uma das lógicas você executará então o código (dependendo do final da rota): 
-
-Caso o final da rota que foi executada no cd do terminal for Usuarios, execute:
-- php usuariosSeeder.php
-
-Se for Produtos:
-- php produtosSeeder.php
-
-E se for Categorias:
-- php categoriasSeeder.php
-
-
-7. # USO DAS ROTAS:
-Inicie o insomnia, crie uma conta/faça login ou inicie um projeto local, selecionando a opção na tela do insomnia.
-
-
-1. `No Insomnia crie um HTTP REQUEST:`
-   
-![alt text](/imagensReferencia/image-1.png)
-
-- Quando criar aparecerá da seguinte maneira:
-  
-![alt text](/imagensReferencia/image-2.png)
-
-2. `Clique em headers:`
-   
-![alt text](/imagensReferencia/image-5.png)
-
-4. `Adicione, clicando em Add, em headers, a chave:`
-   
-![alt text](/imagensReferencia/image-6.png)
-
-6. `Mude conforme necessário o método HTTP (GET, POST, UPDATE ou DELETE, se necessário consulte o texto de "ROTAS" na Seção de funcionalidades acima para entender melhor):`
-   
-![alt text](/imagensReferencia/image-3.png)
-
-8. `Coloque a rota como citado acima as disponíves na seção ROTAS:`
-   
-![alt text](/imagensReferencia/image-4.png)
-
-10. `Se caso necessário (métodos POST e PUT) adicione um corpo (body) para a requisição:`
-    
-![alt text](/imagensReferencia/image-7.png) 
-- `Onde apresenta "JSON" é necessário selecionar o mesmo para funcionar e o corpo está listado os campos necessários no texto de "ROTAS" na Seção de funcionalidades`
-
-12. `Nas rotas de produtos e categorias é necessário enviar o token JWT gerado no login:`
-    
-![alt text](/imagensReferencia/image14.png)
-
-14. `Para colocar nas rotas de produtos e categorias faça o seguinte:`
-    
-![alt text](/imagensReferencia/image15.png)
-
-Entre na aba "AUTH" e daí na parte da setinha escolha Bearer Token e em seguida escreva no campo "Token", body e selecione a primeira opção, depois de selecionar clique denovo quando for colocado no campo e abrirá a seguinte tela:
-
-![alt text](/imagensReferencia/image16.png)
-
-Em "Request" coloque onde está a sua rota de login
-E em "Filter" coloque exatamente $..token, para pegar apenas o token.
-
-16. Clique "SEND" para enviar a requisição e retornará algo.
+---
 
