@@ -130,7 +130,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 <summary>📄 Exemplos de corpo (body)</summary>
 
 **POST /usuarios** — Cadastrar
-```php
+```json
 {
   "nome": "Ricardo",
   "email": "Ricardo@gmail.com",
