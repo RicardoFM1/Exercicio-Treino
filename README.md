@@ -5,7 +5,7 @@
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat&logo=php&logoColor=white)
 ![MySql](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql&logoColor=white)
 ![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
-![Status](Em desenvolvimento)
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
 ---
 **Negrito**
