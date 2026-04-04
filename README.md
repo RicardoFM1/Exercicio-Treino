@@ -7,40 +7,35 @@
 ![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
+
+
+
+
+
+
+
+> [!NOTE]
+> Nota
+ 
 ---
-**Negrito**
-*Itálico*
-***Negrito e italico***
-|Teste |Tabela  |
-|----- | ------  |
-|teste1|teste2 |
 
---- 
-Linha
+> [!TIP]
+> Dica
+
+> [!IMPORTANT]
+> ```Importante```
 
 ---
 
-`Ênfase`
-``Teste`` 
-```Teste``` 
+> [!CAUTION]
+> Cuidado
 
-# Titulo
+---
 
-## Seções/Subtitulo
+> [!WARNING]
+> Aviso
 
-### Subseções
-
-Texto
-
-[!NOTE](Nota)
-[!TIP](Dica)
-[!IMPORTANT](Importante)
-[!CAUTION](Cuidado)
-[!WARNING](Aviso)
-
---Teste-- 
-
-
+ 
 
 ```php
 function teste() {
