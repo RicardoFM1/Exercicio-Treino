@@ -7,8 +7,12 @@
 ![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
+<details>
+<summary>Algo dentro, expanda</summary>
+[Google](https://google.com)
 
-
+[Algo](#tecnologias)
+</details>
 
 
 
