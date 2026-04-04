@@ -351,7 +351,7 @@ DBCATEGORIA_PASS=sua_senha
 JWT_SECRET_KEY=uma_chave_secreta_bem_longa_e_segura
 ```
 
-> [!CAUTION]
+> [!WARNING]
 > ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
 
 ---
