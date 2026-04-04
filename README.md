@@ -3,9 +3,9 @@
 > API REST de gerenciamento de produtos desenvolvida em PHP puro, com autenticação JWT e arquitetura de microserviços. Projeto criado para treinamento da competição Senac.
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat&logo=php&logoColor=white)
-![](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql&logoColor=white)
-(https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
-![Status]
+![MySql](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql&logoColor=white)
+[!JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
+![Status](Em desenvolvimento)
 
 ---
 **Negrito**
