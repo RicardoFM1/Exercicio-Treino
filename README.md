@@ -9,6 +9,7 @@
 
 <details>
 <summary>Algo dentro, expanda</summary>
+ 
 [Google](https://google.com)
 
 [Algo](#tecnologias)
@@ -41,7 +42,7 @@
 
  
 
-```php
+```
 function teste() {
 }
 
@@ -389,7 +390,7 @@ DBCATEGORIA_PASS=sua_senha
 JWT_SECRET_KEY=uma_chave_secreta_bem_longa_e_segura
 ```
 
-> ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
+> [!IMPORTANT] ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
 
 ---
 
