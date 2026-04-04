@@ -10,43 +10,12 @@
 <details>
 <summary>Algo dentro, expanda</summary>
  
-[Google](https://google.com)
+[`Google`](https://google.com)
 
-[Algo](#tecnologias)
+
 </details>
 
-
-
-
-
-> [!NOTE]
-> Nota
- 
 ---
-
-> [!TIP]
-> Dica
-
-> [!IMPORTANT]
-> ```Importante```
-
----
-
-> [!CAUTION]
-> Cuidado
-
----
-
-> [!WARNING]
-> Aviso
-
- 
-
-```
-function teste() {
-}
-
-```
 
 ## 📋 Índice
 
@@ -390,7 +359,8 @@ DBCATEGORIA_PASS=sua_senha
 JWT_SECRET_KEY=uma_chave_secreta_bem_longa_e_segura
 ```
 
-> [!IMPORTANT] ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
+> [!IMPORTANT]
+> ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
 
 ---
 
