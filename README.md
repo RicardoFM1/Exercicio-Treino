@@ -3,11 +3,49 @@
 > API REST de gerenciamento de produtos desenvolvida em PHP puro, com autenticação JWT e arquitetura de microserviços. Projeto criado para treinamento da competição Senac.
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat&logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql&logoColor=white)
-![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql&logoColor=white)
+(https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
+![Status]
 
 ---
+**Negrito**
+*Itálico*
+***Negrito e italico***
+|Teste |Tabela  |
+|----- | ------  |
+|teste1|teste2 |
+
+--- 
+Linha
+---
+
+`Ênfase`
+``Teste`` 
+```Teste``` 
+
+# Titulo
+
+## Seções/Subtitulo
+
+### Subseções
+
+Texto
+
+[!NOTE](Nota)
+[!TIP](Dica)
+[!IMPORTANT](Importante)
+[!CAUTION](Cuidado)
+[!WARNING](Aviso)
+
+--Teste-- 
+
+
+
+```php
+function teste() {
+}
+
+```
 
 ## 📋 Índice
 
@@ -57,7 +95,7 @@ O projeto usa 3 schemas/bancos separados com 3 tabelas:
 
 **EER do Banco:**
 
-![EER banco](imagensReferencia/eer.png)
+<img width="306" height="504" alt="EER do banco" src="https://github.com/user-attachments/assets/0a82e9ef-4ecd-4ce6-b6eb-ac3bba3f5a53" />
 
 ### Script de criação
 
