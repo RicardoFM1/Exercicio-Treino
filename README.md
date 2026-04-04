@@ -7,14 +7,6 @@
 ![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
-<details>
-<summary>Algo dentro, expanda</summary>
- 
-[`Google`](https://google.com)
-
-
-</details>
-
 ---
 
 ## 📋 Índice
@@ -359,7 +351,7 @@ DBCATEGORIA_PASS=sua_senha
 JWT_SECRET_KEY=uma_chave_secreta_bem_longa_e_segura
 ```
 
-> [!IMPORTANT]
+> [!CAUTION]
 > ⚠️ Nunca suba o arquivo `.env` para o GitHub. Adicione-o ao `.gitignore`.
 
 ---
